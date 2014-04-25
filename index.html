@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Audio Player</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+        <meta http-equiv="Content-Script-Type" content="text/javascript" />
+        <meta http-equiv="Content-Language" content="en-US" />
+        <script type="text/javascript" src="jquery-1.5.1.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.8.10.custom.js"></script>
+        <script type="text/javascript" src="JSPlayer.js"></script>
+        <script type="text/javascript" src="JSPlayer.Event.js"></script>
+        <script type="text/javascript" src="JSPlayer.Player.js"></script>
+        <script type="text/javascript" src="JSPlayer.Playlist.js"></script>
+        <script type="text/javascript" src="JSPlayer.UI.PlayerView.js"></script>
+        <script type="text/javascript" src="JSPlayer.UI.PlaylistView.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.AudioFile.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.MP3.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.QueuedReader.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.ForwardReader.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.ID3v1Reader.js"></script>
+        <script type="text/javascript" src="JSPlayer.File.ID3v2Reader.js"></script>
+        <link rel="stylesheet" href="main.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="jquery-ui-1.8.10.custom.css" type="text/css" media="screen" />
+    </head>
+    <body>
+    <div id="playerUI">
+        <div id="timeDisplay"></div>
+        <div id="currentFile"></div>
+        <div id="positionTracker"></div>
+        <ul id="playerControls" class="buttons">
+            <li><button type="button" id="btnPrevious">&lt;&lt;</button></li>
+            <li><button type="button" id="btnPlayPause">Play</button></li>
+            <li><button type="button" id="btnNext">&gt;&gt;</button></li>
+        </ul>
+    </div>
+    <ul class="buttons">
+        <li id="fileSelectorContainer">
+            <input type="file" id="fileSelector" multiple="true" accept="audio/*" />
+            <button type="button" id="btnSelectFiles">Add Files</button>
+        </li>
+        <li>
+            <button type="button" id="btnRemoveAllFiles">Remove All</button>
+        </li>
+    </ul>
+    <ul id="playlist" dropzone="copy f:audio/*"></ul>
+    <script type="text/javascript">
+    $(function() {
+        "use strict";
+
+        var playlist = new JSPlayer.playlist();
+        var player = new JSPlayer.player(playlist);
+
+        var playerView = new JSPlayer.UI.PlayerView(
+            player,
+            playlist,
+            $('#positionTracker'),
+            $('#timeDisplay'),
+            $('#currentFile'),
+            $('#btnPrevious'),
+            $('#btnNext'),
+            $('#btnPlayPause'));
+
+        var playlistView = new JSPlayer.UI.PlaylistView(
+            playlist,
+            $('#playlist'),
+            $('#btnSelectFiles'),
+            $('#fileSelector'),
+            $('#btnRemoveAllFiles'));
+    });
+    </script>
+    </body>
+</html>
